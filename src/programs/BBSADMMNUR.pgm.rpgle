@@ -9,13 +9,13 @@
       * INDICATORS USED:
       * 33 - *ON = BBS is in Maintenance Mode
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
      FBBSADMMNUDCF   E             WORKSTN
      FPCONFIG   UF   E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Variables
      D wCfgKey         S              6A
      D wMode           S              1A
@@ -30,7 +30,7 @@
      C     *INZSR        BEGSR
      C                   EVAL      SCRSCR = 'BBSADMMNU'
       * Get values from DTAARA and show them on the screen
-     D/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     D/Include CBKHEADER
      C                   EXSR      UpdMaintOnScr
      C                   ENDSR
       **********************************************************************

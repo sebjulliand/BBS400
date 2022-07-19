@@ -7,7 +7,7 @@
       * This program shows the list of Access Levels, and allows to edit or
       *   delete them, as well as add new ones
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 25 - Roll key
@@ -20,7 +20,7 @@
      FPACCLVS   UF A E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Constants
      D wErrDuplAccLvl  C                   CONST('Access Level already exists')
      D wOptsLin1       C                   CONST(' 4=Delete   7=Rename    8=Cha-
@@ -53,7 +53,7 @@
       **********************************************************************
      C     *INZSR        BEGSR
       * Get values from DATAARA and show them on screen
-     C/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     C/Include CBKHEADER
       * Initialise variables and load subfile
      C                   EVAL      SCRSCR = 'BBSAACCLV'
      C                   EVAL      OPTSL1 = wOptsLin1

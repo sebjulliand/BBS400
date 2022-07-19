@@ -9,7 +9,7 @@
       *  expiration days, and if so changes the Access Level to the
       *  expiring level configured for the current Access Level
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
      FPUSERS    UF   E           K DISK
      FLSESSIONS IF   E           K DISK

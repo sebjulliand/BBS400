@@ -12,7 +12,7 @@
       * 32 - SFLEND(*MORE)
       * 40 - *ON if pMode = 'B', *OFF if pMode = 'S'
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
      FBBSWINSBSWCF   E             WORKSTN
      F                                     SFILE(SF:wRRN)
@@ -20,7 +20,7 @@
      FPSBORDS   IF   E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Variables
      D pMode           S              1A
      D pBoardUID       S              8A

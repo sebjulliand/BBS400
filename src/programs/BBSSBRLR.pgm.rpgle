@@ -7,7 +7,7 @@
       * This program shows the list of Sub-Boards that the user can access,
       *   depending on the user's Access Level
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 25 - Roll key
@@ -22,7 +22,7 @@
      FPMESSGS   UF   E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Constants
      D cUp             C                   CONST('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
      D cLo             C                   CONST('abcdefghijklmnopqrstuvwxyz')
@@ -45,7 +45,7 @@
      D                                     for posting messages in this Sub-Boa-
      D                                     rd.')
       * Variables
-     D/COPY DVBBS400/CURRENTSRC,CBKUSEWINS
+     D/Include CBKUSEWINS
      D pMode           S              1A
      D pBoardID        S              8A
      D wRRN            S              4P 0
@@ -80,7 +80,7 @@
      C                   KFLD                    SCRBRD
      C                   KFLD                    SCRSBS
       * Get values from DATAARA and show them on screen
-     C/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     C/Include CBKHEADER
       * Initialise variables and load subfile
      C                   EVAL      SCRSCR = 'BBSSBRL'
      C                   MOVEL     wUserLvl      wUserLvlD

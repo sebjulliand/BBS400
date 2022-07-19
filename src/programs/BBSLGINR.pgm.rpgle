@@ -13,7 +13,7 @@
       **********************************************************************
       * Compiler flags
      H ALWNULL(*USRCTL)
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 30 - *ON = Valid Username/Password
@@ -29,7 +29,7 @@
      FPSESSIONS UF A E             DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
      D dsTodayNowC     DS
      D  wTodNowTime                   6A
      D  wTodNowDate                   6A

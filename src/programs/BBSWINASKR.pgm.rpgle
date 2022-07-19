@@ -6,7 +6,7 @@
       * This program shows a window that allows the user to enter a new
       *   value for a Text or a Number.
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
      FBBSWINASKWCF   E             WORKSTN
       **********************************************************************

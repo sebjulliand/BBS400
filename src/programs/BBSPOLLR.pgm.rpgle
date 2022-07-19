@@ -7,7 +7,7 @@
       * This program allows to View and Vote a Poll, for normal User
       *   and also to Create and Edit, for Administrator
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 80 - *ON turns DSPATR(PR), which protects fields from being changed
@@ -21,7 +21,7 @@
      FPPOLLSA   UF A E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Constants
      D cViewing        C                   CONST('F5=Refresh   F10=Change Vote -
      D                                       F12=Go back')
@@ -75,7 +75,7 @@
      C                   EVAL      KEYLST = cViewing
      C                   ENDSL
       * Get values from DATAARA and show them on screen
-     C/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     C/Include CBKHEADER
       * Declare composite keys
      C     KPOLLSA       KLIST
      C                   KFLD                    POLUID

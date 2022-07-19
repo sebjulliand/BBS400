@@ -6,7 +6,7 @@
       *
       * This program shows all polls available.
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 25 - Roll key
@@ -24,7 +24,7 @@
      FPPOLLSA   IF   E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Constants
      D cKeysAdmin1     C                   CONST('F5=Refresh   F6=Create   F12=-
      D                                     Go back   F17=Include Deleted/Closed-
@@ -42,7 +42,7 @@
      D cErrNotOpen     C                   CONST('The selected poll is not open-
      D                                     .')
       * Variables
-     D/COPY DVBBS400/CURRENTSRC,CBKUSEWINS
+     D/Include CBKUSEWINS
      D pMode           S              1A
      D wMode           S              1A
      D wRRN            S              4P 0
@@ -73,7 +73,7 @@
      C                   KFLD                    POLUID
      C                   KFLD                    wUser
       * Get values from DATAARA and show them on screen
-     C/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     C/Include CBKHEADER
       * Initialise variables and indicators, and load subfile
      C                   SETOFF                                       434445
      C                   Z-ADD     0             wRRN

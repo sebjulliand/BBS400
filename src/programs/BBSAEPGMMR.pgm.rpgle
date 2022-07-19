@@ -7,7 +7,7 @@
       * This program allows the SysOp to Add a new External Program or Edit
       *   an existing one
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 89 - *OFF = Check of newly entered data was OK
@@ -18,7 +18,7 @@
      FPEXTPGMS  UF A E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Constants
      D cTitleAdd       C                   CONST('BBS400 - Add a new External P-
      D                                     rogram')
@@ -63,7 +63,7 @@
      C                   EXSR      LoadData
      C                   ENDSL
       * Get values from DATAARA and show them on screen
-     C/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     C/Include CBKHEADER
       * Check User Level, to prevent that this program is called directly
       *   by somebody else
      C*    wUserLvl      IFNE      '99'

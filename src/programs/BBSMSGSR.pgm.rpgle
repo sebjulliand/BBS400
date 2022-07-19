@@ -7,7 +7,7 @@
       * This program shows all messages from a specific Sub-Board, ordered
       *   descent by posted date/time
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 25 - Roll key
@@ -25,7 +25,7 @@
      FPSBORDS   IF   E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Constants
      D cErrLvlLowP     C                   CONST('Your Access Level is too low -
      D                                     for posting messages in this Sub-Boa-
@@ -74,7 +74,7 @@
      C                   KFLD                    pSBoardUID
      C                   EVAL      SCRSCR = 'BBSMSGS'
       * Get values from DATAARA and show them on screen
-     C/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     C/Include CBKHEADER
       * Initialise variables and indicators, and load subfile
      C                   MOVEL     wUserLvl      wUserLvlD
      C                   SETOFF                                       434445

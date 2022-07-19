@@ -12,7 +12,7 @@
       **********************************************************************
       * Compiler flags
      H ALWNULL(*USRCTL)
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
      FBBSNEWREGDCF   E             WORKSTN
      F                                     INFDS(dsINFDS)
@@ -20,8 +20,8 @@
      FPINVALNICKIF   E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
-     D/COPY DVBBS400/CURRENTSRC,CBKUSRHIDS
+     D/Include CBKDTAARA
+     D/Include CBKUSRHIDS
      D dsTodayNowC     DS
      D  wTodNowTime                   6A
      D  wTodNowDate                   6A
@@ -56,7 +56,7 @@
      D wTodNowDateD    S              6P 0
      D wTodayNowD      S             12P 0
      D wTodayNowDate   S               D
-     C/COPY DVBBS400/CURRENTSRC,CBKPCFGDCL
+     C/Include CBKPCFGDCL
      ***********************************************************************
      C                   WRITE     HEADER
      C                   WRITE     FOOTER

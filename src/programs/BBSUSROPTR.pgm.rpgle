@@ -8,14 +8,14 @@
       **********************************************************************
       * Compiler flags
      H ALWNULL(*USRCTL)
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
      FBBSUSROPTDCF   E             WORKSTN
      FPUSERS    UF A E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
-     D/COPY DVBBS400/CURRENTSRC,CBKUSRHIDS
+     D/Include CBKDTAARA
+     D/Include CBKUSRHIDS
       * Constants
      D cPassNoMatch    C                   CONST('Passwords do not match. Pleas-
      D                                     e enter again.')

@@ -1,13 +1,13 @@
-     H/TITLE List all Boards available (Access Lvl) for the user
+     H/TITLE List all IFS files available (Access Lvl) for the user
      H COPYRIGHT('(C) 2020 David Asta under MIT License')
       * SYSTEM      : V4R5
       * PROGRAMMER  : David Asta
-      * DATE-WRITTEN: 19/NOV/2020
+      * DATE-WRITTEN: 28/NOV/2020
       *
-      * This program shows the list of Boards that the user can access,
+      * This program shows the list of IFS files that the user can access,
       *   depending on the user's Access Level
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 25 - Roll key
@@ -17,29 +17,25 @@
       * 98 - EOF
       * 99 - EOF
       **********************************************************************
-     FBBSBRDLD  CF   E             WORKSTN
+     FBBSIFSFILDCF   E             WORKSTN
      F                                     SFILE(SF:wRRN)
-     FPBOARDS   UF A E           K DISK
-     FPSBORDS   IF   E           K DISK
-     FPMESSGS   IF   E           K DISK
+     FPIFSFILES UF A E           K DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Constants
-     D cUp             C                   CONST('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-     D cLo             C                   CONST('abcdefghijklmnopqrstuvwxyz')
-     D cKeysAdmin      C                   CONST('F5=Refresh   F6=Create   F12=-
-     D                                     Go back')
-     D cKeysUser       C                   CONST('F5=Refresh   F12=Go back')
-     D cNoBoards       C                   CONST('No boards are accessible for -
-     D                                     your Access Level.')
      D cErrOptNoAdmin  C                   CONST('Value entered for field is no-
      D                                     t valid. Valid values listed in mess-
      D                                     age help.')
+     D cKeysAdmin      C                   CONST('F5=Refresh   F6=Add   F12=Go -
+     D                                     back')
+     D cKeysUser       C                   CONST('F5=Refresh   F12=Go back')
+     D cNoFiles        C                   CONST('No files are accessible for y-
+     D                                     our Access Level.')
      D cErrMaxLvl99    C                   CONST('Maximum Level can only be 99.-
      D                                     ')
       * Variables
-     D/COPY DVBBS400/CURRENTSRC,CBKUSEWINS
+     D/Include CBKUSEWINS
      D pMode           S              1A
      D wRRN            S              4P 0
      D wUserLvlD       S              2P 0
@@ -64,13 +60,9 @@
      C                   EVAL      KEYLST = cKeysUser
      C                   ENDIF
       * Get values from DATAARA and show them on screen
-     C/COPY DVBBS400/CURRENTSRC,CBKHEADER
-      * Declare Composite Keys
-     C     KMESSGS       KLIST
-     C                   KFLD                    SBRBRD
-     C                   KFLD                    SBRSHT
+     C/Include CBKHEADER
       * Initialise variables and load subfile
-     C                   EVAL      SCRSCR = 'BBSBRDL'
+     C                   EVAL      SCRSCR = 'BBSIFSFIL'
      C                   MOVEL     wUserLvl      wUserLvlD
      C                   Z-ADD     0             wRRN
      C                   EXSR      LoadSFL
@@ -83,9 +75,9 @@
      C                   IF        *IN05 = *ON
      C                   EXSR      ReLoadSFL
      C                   ENDIF
-      * F6=Create (only from Administration Menu)
+      * F6=Add (only from Administration Menu)
      C                   IF        *IN06 = *ON AND *IN50 = *ON
-     C                   EXSR      CreateNewBoard
+     C                   EXSR      AddNewFile
      C                   ENDIF
       * F12=Go back
      C                   IF        *IN12 = *ON
@@ -100,70 +92,7 @@
      C                   READC     SF                                     91
      C                   DOW       *IN91 = *OFF
      C                   SELECT
-     C                   WHEN      SCROPT = '4'
-      * Delete (only from Administration Menu)
-     C                   IF        *IN50 = *ON
-      *         Ask for confirmation before deleting
-     C     'Delete'      CAT       SCRSHT:1      wConfirmQ
-     C                   EVAL      wConfirmA = 'N'
-     C                   EVAL      wConfirmF3 = *OFF
-     C                   CALL      'BBSWINYNR'
-     C                   PARM                    wConfirmQ
-     C                   PARM                    wConfirmA
-     C                   PARM                    wConfirmF3
-     C                   IF        wConfirmF3 = *OFF AND wConfirmA = 'Y'
-     C     SCRSHT        CHAIN     PBOARDS
-     C                   IF        %FOUND
-     C                   DELETE    RBOARD
-     C                   ENDIF
-     C                   ENDIF
-     C                   ELSE
-     C                   EVAL      MSGLIN = cErrOptNoAdmin
-     C                   ENDIF
-     C                   WHEN      SCROPT = '5'
-      * List Sub-Boards
-     C                   CALL      'BBSSBRLR'
-     C                   PARM                    SCRSHT
-     C                   PARM                    pMode
-     C                   WHEN      SCROPT = '7'
-      * Rename Short (only from Administration Menu)
-     C                   EVAL      wWinMode = 'T'
-     C                   EVAL      wWinText = SCRSHT
-     C                   EVAL      wWinNumber = 0
-     C                   EVAL      wWinF3 = *OFF
-     C                   CALL      'BBSWINASKR'
-     C                   PARM                    wWinMode
-     C                   PARM                    wWinText
-     C                   PARM                    wWinNumber
-     C                   PARM                    wWinF3
-     C                   IF        wWinF3 = *OFF
-     C     SCRSHT        CHAIN     PBOARDS
-     C                   EVAL      BRDSHT = wWinText
-      * Convert it to Uppercase
-     C     cLo:cUp       XLATE     BRDSHT        BRDSHT
-     C                   IF        %FOUND
-     C                   UPDATE    RBOARD
-     C                   ENDIF
-     C                   ENDIF
-     C                   WHEN      SCROPT = '8'
-      * Rename Long (only from Administration Menu)
-     C                   EVAL      wWinMode = 'T'
-     C                   EVAL      wWinText = SCRLNG
-     C                   EVAL      wWinNumber = 0
-     C                   EVAL      wWinF3 = *OFF
-     C                   CALL      'BBSWINASKR'
-     C                   PARM                    wWinMode
-     C                   PARM                    wWinText
-     C                   PARM                    wWinNumber
-     C                   PARM                    wWinF3
-     C                   IF        wWinF3 = *OFF
-     C     SCRSHT        CHAIN     PBOARDS
-     C                   EVAL      BRDLNG = wWinText
-     C                   IF        %FOUND
-     C                   UPDATE    RBOARD
-     C                   ENDIF
-     C                   ENDIF
-     C                   WHEN      SCROPT = '9'
+     C                   WHEN      SCROPT = '2'
       * Change Access Level (only from Administration Menu)
      C                   IF        *IN50 = *ON
      C                   EVAL      wWinMode = 'N'
@@ -176,17 +105,127 @@
      C                   PARM                    wWinNumber
      C                   PARM                    wWinF3
      C                   IF        wWinF3 = *OFF
-      *       Check the value is less than 100
-     C                   IF        wWinNumber > 99
-     C                   EVAL      MSGLIN = cErrMaxLvl99
-     C                   ELSE
-     C     SCRSHT        CHAIN     PBOARDS
-     C                   EVAL      BRDALV = wWinNumber
+     C     SCRNAM        CHAIN     PIFSFILES
      C                   IF        %FOUND
-     C                   UPDATE    RBOARD
+     C                   EVAL      IFSALV = wWinNumber
+     C                   UPDATE    RIFSFILE
      C                   ENDIF
      C                   ENDIF
+     C                   ELSE
+     C                   EVAL      MSGLIN = cErrOptNoAdmin
      C                   ENDIF
+     C                   WHEN      SCROPT = '3'
+      * Change Path (only from Administration Menu)
+     C                   IF        *IN50 = *ON
+     C                   EVAL      wWinMode = 'T'
+     C                   EVAL      wWinText = SCRPTH
+     C                   EVAL      wWinNumber = 0
+     C                   EVAL      wWinF3 = *OFF
+     C                   CALL      'BBSWINASKR'
+     C                   PARM                    wWinMode
+     C                   PARM                    wWinText
+     C                   PARM                    wWinNumber
+     C                   PARM                    wWinF3
+     C                   IF        wWinF3 = *OFF
+     C     SCRNAM        CHAIN     PIFSFILES
+     C                   IF        %FOUND
+     C                   EVAL      IFSPTH = wWinText
+     C                   UPDATE    RIFSFILE
+     C                   ENDIF
+     C                   ENDIF
+     C                   ELSE
+     C                   EVAL      MSGLIN = cErrOptNoAdmin
+     C                   ENDIF
+     C                   WHEN      SCROPT = '4'
+      * Delete (only from Administration Menu)
+     C                   IF        *IN50 = *ON
+      *         Ask for confirmation before deleting
+     C     'Delete'      CAT       SCRNAM:1      wConfirmQ
+     C                   EVAL      wConfirmA = 'N'
+     C                   EVAL      wConfirmF3 = *OFF
+     C                   CALL      'BBSWINYNR'
+     C                   PARM                    wConfirmQ
+     C                   PARM                    wConfirmA
+     C                   PARM                    wConfirmF3
+     C                   IF        wConfirmF3 = *OFF AND wConfirmA = 'Y'
+     C     SCRNAM        CHAIN     PIFSFILES
+     C                   IF        %FOUND
+     C                   DELETE    RIFSFILE
+     C                   ENDIF
+     C                   ENDIF
+     C                   ELSE
+     C                   EVAL      MSGLIN = cErrOptNoAdmin
+     C                   ENDIF
+     C                   WHEN      SCROPT = '5'
+      * Display IFS File
+     C                   CALL      'BBSDSPIFSC'
+     C                   PARM                    SCRPTH
+     C                   PARM                    SCRNAM
+     C                   WHEN      SCROPT = '7'
+      * Rename Filename (only from Administration Menu)
+     C                   IF        *IN50 = *ON
+     C                   EVAL      wWinMode = 'T'
+     C                   EVAL      wWinText = SCRNAM
+     C                   EVAL      wWinNumber = 0
+     C                   EVAL      wWinF3 = *OFF
+     C                   CALL      'BBSWINASKR'
+     C                   PARM                    wWinMode
+     C                   PARM                    wWinText
+     C                   PARM                    wWinNumber
+     C                   PARM                    wWinF3
+     C                   IF        wWinF3 = *OFF
+     C     SCRNAM        CHAIN     PIFSFILES
+     C                   IF        %FOUND
+     C                   EVAL      IFSFNM = wWinText
+     C                   UPDATE    RIFSFILE
+     C                   ENDIF
+     C                   ENDIF
+     C                   ELSE
+     C                   EVAL      MSGLIN = cErrOptNoAdmin
+     C                   ENDIF
+     C                   WHEN      SCROPT = '8'
+      * Rename Description (only from Administration Menu)
+     C                   IF        *IN50 = *ON
+     C                   EVAL      wWinMode = 'T'
+     C                   EVAL      wWinText = SCRDSC
+     C                   EVAL      wWinNumber = 0
+     C                   EVAL      wWinF3 = *OFF
+     C                   CALL      'BBSWINASKR'
+     C                   PARM                    wWinMode
+     C                   PARM                    wWinText
+     C                   PARM                    wWinNumber
+     C                   PARM                    wWinF3
+     C                   IF        wWinF3 = *OFF
+     C     SCRNAM        CHAIN     PIFSFILES
+     C                   IF        %FOUND
+     C                   EVAL      IFSDSC = wWinText
+     C                   UPDATE    RIFSFILE
+     C                   ENDIF
+     C                   ENDIF
+     C                   ELSE
+     C                   EVAL      MSGLIN = cErrOptNoAdmin
+     C                   ENDIF
+     C                   WHEN      SCROPT = '9'
+      * Change Category (only from Administration Menu)
+     C                   IF        *IN50 = *ON
+     C                   EVAL      wWinMode = 'T'
+     C                   EVAL      wWinText = SCRCAT
+     C                   EVAL      wWinNumber = 0
+     C                   EVAL      wWinF3 = *OFF
+     C                   CALL      'BBSWINASKR'
+     C                   PARM                    wWinMode
+     C                   PARM                    wWinText
+     C                   PARM                    wWinNumber
+     C                   PARM                    wWinF3
+     C                   IF        wWinF3 = *OFF
+     C     SCRNAM        CHAIN     PIFSFILES
+     C                   IF        %FOUND
+     C                   EVAL      IFSCAT = wWinText
+     C                   UPDATE    RIFSFILE
+     C                   ENDIF
+     C                   ENDIF
+     C                   ELSE
+     C                   EVAL      MSGLIN = cErrOptNoAdmin
      C                   ENDIF
      C                   ENDSL
      C                   EVAL      SCROPT = *BLANKS
@@ -205,19 +244,19 @@
      C                   EXSR      LoadSFL
      C                   ENDSR
       **********************************************************************
-      * Load all records from PBOARDS
+      * Load all records from PIFSFILES
       * All records are loaded (load-all SFL) until the end of the file or
       *  until SFLSIZ is reached
       **********************************************************************
      C     LoadSFL       BEGSR
-     C     *START        SETLL     PBOARDS
+     C     *START        SETLL     PIFSFILES
      C                   DOU       %EOF
-     C                   READ      PBOARDS
+     C                   READ      PIFSFILES
      C                   IF        %EOF
      C                   LEAVE
      C                   ENDIF
       * Put data on screen (if User has enough Access Level)
-     C                   IF        wUserLvlD >= BRDALV
+     C                   IF        wUserLvlD >= IFSALV
      C                   EXSR      Data2SFL
      C                   ADD       1             wRRN
      C                   WRITE     SF
@@ -238,32 +277,17 @@
       * Put data into a SFL record
       **********************************************************************
      C     Data2SFL      BEGSR
-     C                   EVAL      SCRSHT = BRDSHT
-     C                   EVAL      SCRLNG = BRDLNG
-     C                   EVAL      SCRLNG = BRDLNG
-     C   50              EVAL      SCRALV = BRDALV
-      * Get number of Sub-Boards
-     C                   EVAL      SCRNSB = 0
-     C                   EVAL      SCRNMS = 0
-     C     BRDSHT        SETLL     PSBORDS                              99
-     C                   DOW       *IN99 = *OFF
-     C     BRDSHT        READE     PSBORDS                                99
-     C   99              LEAVE
-     C                   ADD       1             SCRNSB
-      * Get number of Posts on read Sub-Board
-     C     KMESSGS       SETLL     PMESSGS                              98
-     C                   DOW       *IN98 = *OFF
-     C     KMESSGS       READE     PMESSGS                                98
-     C   98              LEAVE
-     C                   ADD       1             SCRNMS
-     C                   ENDDO
-     C                   ENDDO
+     C                   EVAL      SCRNAM = IFSFNM
+     C                   EVAL      SCRDSC = IFSDSC
+     C                   EVAL      SCRCAT = IFSCAT
+     C   50              EVAL      SCRALV = IFSALV
+     C                   EVAL      SCRPTH = IFSPTH
      C                   ENDSR
       **********************************************************************
-      * Ask the Admin user for a Short Name,
+      * Ask the Admin user for a Filename,
       * and create a record with default values
       **********************************************************************
-     C     CreateNewBoardBEGSR
+     C     AddNewFile    BEGSR
      C                   EVAL      wWinMode = 'T'
      C                   EVAL      wWinText = *BLANKS
      C                   EVAL      wWinNumber = 0
@@ -274,12 +298,12 @@
      C                   PARM                    wWinNumber
      C                   PARM                    wWinF3
      C                   IF        wWinF3 = *OFF
-     C                   EVAL      BRDSHT = wWinText
-      * Convert it to Uppercase
-     C     cLo:cUp       XLATE     BRDSHT        BRDSHT
-     C                   EVAL      BRDLNG = BRDSHT
-     C                   EVAL      BRDALV = 99
-     C                   WRITE     RBOARD
+     C                   EVAL      IFSFNM = wWinText
+     C                   EVAL      IFSPTH = 'Path ?'
+     C                   EVAL      IFSDSC = *BLANKS
+     C                   EVAL      IFSCAT = *BLANKS
+     C                   EVAL      IFSALV = 99
+     C                   WRITE     RIFSFILE
      C                   EXSR      ReLoadSFL
      C                   ENDIF
      C                   ENDSR

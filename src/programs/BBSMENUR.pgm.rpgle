@@ -6,13 +6,13 @@
       *
       * This program shows the Main Menu of the BBS to a logged in User
       **********************************************************************
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
      FBBSMENUD  CF   E             WORKSTN
      FPSESSIONS UF A E             DISK
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
+     D/Include CBKDTAARA
       * Variables
      D wBlanks         S             45A   INZ(*BLANKS)
      D wMode           S              1A
@@ -28,7 +28,7 @@
      C     *INZSR        BEGSR
      C                   EVAL      SCRSCR = 'BBSMENU'
       * Get values from DTAARA and show them on the screen
-     D/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     D/Include CBKHEADER
       * Get Last Login Date from DTAARA too
      C                   IN        wDTAARA
      C                   EVAL      SCRLLG = wUserLstLogin

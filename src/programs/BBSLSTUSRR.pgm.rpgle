@@ -9,7 +9,7 @@
       **********************************************************************
       * Compiler flags
      H ALWNULL(*USRCTL)
-     H/COPY DVBBS400/CURRENTSRC,CBKOPTIMIZ
+     H/Include CBKOPTIMIZ
       **********************************************************************
       * INDICATORS USED:
       * 25 - Roll key
@@ -30,8 +30,8 @@
      FPUSERS    UF   E           K DISK    RENAME(RUSER:PUSER)
       **********************************************************************
       * Data structures
-     D/COPY DVBBS400/CURRENTSRC,CBKDTAARA
-     D/COPY DVBBS400/CURRENTSRC,CBKUSRHIDS
+     D/Include CBKDTAARA
+     D/Include CBKUSRHIDS
      D dsTodayNowC     DS
      D  wTodNowTime                   6A
      D  wTodNowDate                   6A
@@ -40,7 +40,7 @@
      D                                     t valid. Valid values listed in mess-
      D                                     age help.')
       * Variables
-     D/COPY DVBBS400/CURRENTSRC,CBKUSEWINS
+     D/Include CBKUSEWINS
      D pMode           S              1A
      D wTodayNowD      S             12P 0
      D wTodNowTimeD    S              6P 0
@@ -65,7 +65,7 @@
      C     *ENTRY        PLIST
      C                   PARM                    pMode
       * Get values from DATAARA and show them on screen
-     C/COPY DVBBS400/CURRENTSRC,CBKHEADER
+     C/Include CBKHEADER
       * Get Today's date/time
      C                   TIME                    wTodayNowD
      C                   MOVEL     wTodayNowD    dsTodayNowC
