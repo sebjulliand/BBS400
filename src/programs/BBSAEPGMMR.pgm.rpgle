@@ -1,149 +1,173 @@
-     H/TITLE Add/View External Program
-     H COPYRIGHT('(C) 2020 David Asta under MIT License')
-      * SYSTEM      : V4R5
-      * PROGRAMMER  : David Asta
-      * DATE-WRITTEN: 10/DEC/2020
-      *
-      * This program allows the SysOp to Add a new External Program or Edit
-      *   an existing one
-      **********************************************************************
-     H/Include CBKOPTIMIZ
-      **********************************************************************
-      * INDICATORS USED:
-      * 89 - *OFF = Check of newly entered data was OK
-      * 90 - CHAIN not found
-      * 91 - UPDATE/WRITE error
-      **********************************************************************
-     FBBSAEPGMMDCF   E             WORKSTN
-     FPEXTPGMS  UF A E           K DISK
-      **********************************************************************
-      * Data structures
-     D/Include CBKDTAARA
-      * Constants
-     D cTitleAdd       C                   CONST('BBS400 - Add a new External P-
-     D                                     rogram')
-     D cTitleEdit      C                   CONST('BBS400 - Edit an External Pro-
-     D                                     gram')
-     D cAddOK          C                   CONST('New External Program successf-
-     D                                     ully added.')
-     D cModifOK        C                   CONST('External Program successfully-
-     D                                      modified.')
-     D cSaveKO         C                   CONST('There was an error when tryin-
-     D                                     g to save the data.')
-     D cOrdExists      C                   CONST('The entered Menu Order is alr-
-     D                                     eady assigned to another External Pr-
-     D                                     ogram.')
-     D cOptExists      C                   CONST('The entered Menu Option is al-
-     D                                     ready assigned to another External P-
-     D                                     Program.')
-      * Variables
-     D pMode           S              1A
-     D pOrder          S              2P 0
-     D wPrevOrd        S              2P 0
-     ***********************************************************************
-     C                   WRITE     HEADER
-     C                   WRITE     FOOTER
-     C                   EXFMT     BODY
-     C                   CLEAR                   MSGLIN
-     C                   EXSR      CheckFkeys
-      **********************************************************************
-      * Subroutine called automatically at startup
-      **********************************************************************
-     C     *INZSR        BEGSR
-     C                   EVAL      SCRSCR = 'BBSAEPGMM'
-      * Receive parameters
-     C     *ENTRY        PLIST
-     C                   PARM                    pMode
-     C                   PARM                    pOrder
-     C                   SELECT
-     C                   WHEN      pMode = 'A'
-     C                   EVAL      SCRNAM = cTitleAdd
-     C                   WHEN      pMode = 'E'
-     C                   EVAL      SCRNAM = cTitleEdit
-     C                   EXSR      LoadData
-     C                   ENDSL
-      * Get values from DATAARA and show them on screen
-     C/Include CBKHEADER
-      * Check User Level, to prevent that this program is called directly
-      *   by somebody else
-     C*    wUserLvl      IFNE      '99'
-     C*                  EVAL      *INLR = *ON
-     C*                  RETURN
-     C*                  ENDIF
-     C                   ENDSR
-      **********************************************************************
-      * Check Function keys pressed by the user
-      **********************************************************************
-     C     CheckFkeys    BEGSR
-      * F10=Save changes
-     C                   IF        *IN10 = *ON
-     C                   SELECT
-     C                   WHEN      pMode = 'A'
-      * Add a new External Program
-     C                   EXSR      AddEPGM
-     C                   WHEN      pMode = 'E'
-      * Edit an existing External Program
-     C                   EXSR      ModifyEPGM
-     C                   ENDSL
-     C                   ENDIF
-      * F12=Go back
-     C                   IF        *IN12 = *ON
-     C                   EVAL      *INLR = *ON
-     C                   RETURN
-     C                   ENDIF
-     C                   ENDSR
-      **********************************************************************
-      * Load data and show it on screen
-      **********************************************************************
-     C     LoadData      BEGSR
-     C     pOrder        CHAIN     PEXTPGMS
-     C                   IF        %FOUND
-     C                   EVAL      SCRPNM = EXTPGM
-     C                   EVAL      SCROBJ = EXTOBJ
-     C                   EVAL      SCRLIB = EXTLIB
-     C                   EVAL      SCRORD = EXTORD
-     C                   EVAL      SCRALV = EXTALV
-     C                   IF        pMode  = 'E'
-     C                   EVAL      wPrevOrd = SCRORD
-     C                   ENDIF
-     C                   ELSE
-     C     'LOAD ERROR'  DSPLY
-     C                   ENDIF
-     C                   ENDSR
-      **********************************************************************
-      * Add a new External Program
-      **********************************************************************
-     C     AddEPGM       BEGSR
-     C     SCRORD        CHAIN     PEXTPGMS                           81
-     C  N81              EVAL      MSGLIN = cOrdExists
-     C  N81              GOTO      ENDADD
-     C                   EVAL      EXTORD = SCRORD
-     C                   EVAL      EXTPGM = SCRPNM
-     C                   EVAL      EXTOBJ = SCROBJ
-     C                   EVAL      EXTLIB = SCRLIB
-     C                   EVAL      EXTALV = SCRALV
-     C                   WRITE     RETPGM                               91
-     C   91              EVAL      MSGLIN = cSaveKO
-     C  N91              EVAL      MSGLIN = cAddOK
-     C     ENDADD        TAG
-     C                   ENDSR
-      **********************************************************************
-      * Edit an existing External Program
-      **********************************************************************
-     C     ModifyEPGM    BEGSR
-     C     SCRORD        CHAIN     PEXTPGMS                           81
-     C                   IF        SCRORD = wPrevOrd
-     C                   EVAL      *IN81 = *ON
-     C                   ENDIF
-     C  N81              EVAL      MSGLIN = cOrdExists
-     C  N81              GOTO      ENDEDIT
-     C                   EVAL      EXTORD = SCRORD
-     C                   EVAL      EXTPGM = SCRPNM
-     C                   EVAL      EXTOBJ = SCROBJ
-     C                   EVAL      EXTLIB = SCRLIB
-     C                   EVAL      EXTALV = SCRALV
-     C                   UPDATE    RETPGM                               91
-     C   91              EVAL      MSGLIN = cSaveKO
-     C  N91              EVAL      MSGLIN = cModifOK
-     C     ENDEDIT       TAG
-     C                   ENDSR
+**FREE
+/TITLE Add/View External Program
+Ctl-Opt COPYRIGHT('(C) 2020 David Asta under MIT License');
+// SYSTEM      : V4R5
+// PROGRAMMER  : David Asta
+// DATE-WRITTEN: 10/DEC/2020
+//
+// This program allows the SysOp to Add a new External Program or Edit
+//   an existing one
+//*********************************************************************
+/Include CBKOPTIMIZ
+//*********************************************************************
+// INDICATORS USED:
+// 89 - *OFF = Check of newly entered data was OK
+// 90 - CHAIN not found
+// 91 - UPDATE/WRITE error
+//*********************************************************************
+Dcl-F BBSAEPGMMD WORKSTN;
+Dcl-F PEXTPGMS   Usage(*Update:*Delete:*Output) Keyed;
+//*********************************************************************
+// Data structures
+/Include CBKDTAARA
+// Constants
+Dcl-C cTitleAdd       CONST('BBS400 - Add a new External P-
+rogram');
+Dcl-C cTitleEdit      CONST('BBS400 - Edit an External Pro-
+gram');
+Dcl-C cAddOK          CONST('New External Program successf-
+ully added.');
+Dcl-C cModifOK        CONST('External Program successfully-
+ modified.');
+Dcl-C cSaveKO         CONST('There was an error when tryin-
+g to save the data.');
+Dcl-C cOrdExists      CONST('The entered Menu Order is alr-
+eady assigned to another External Pr-
+ogram.');
+Dcl-C cOptExists      CONST('The entered Menu Option is al-
+ready assigned to another External P-
+Program.');
+// Variables
+Dcl-S wPrevOrd        Packed(2:0);
+// Prototype for BBSAEPGMMR
+Dcl-Pr Pgm_BBSAEPGMMR ExtPgm('BBSAEPGMMR');
+  pMode           Char(1);
+  pOrder          Packed(2:0);
+End-Pr;
+// Procedure interface for BBSAEPGMMR
+Dcl-Pi Pgm_BBSAEPGMMR;
+  pMode           Char(1);
+  pOrder          Packed(2:0);
+End-Pi;
+//*********************************************************************
+Write HEADER;
+Write FOOTER;
+Exfmt BODY;
+Clear MSGLIN;
+Exsr CheckFkeys;
+//*********************************************************************
+// Subroutine called automatically at startup
+//*********************************************************************
+BegSr *INZSR;
+  SCRSCR = 'BBSAEPGMM';
+  // Receive parameters
+  Select;
+    When pMode = 'A';
+      SCRNAM = cTitleAdd;
+    When pMode = 'E';
+      SCRNAM = cTitleEdit;
+      Exsr LoadData;
+  EndSl;
+  // Get values from DATAARA and show them on screen
+/Include CBKHEADER
+  // Check User Level, to prevent that this program is called directly
+  //   by somebody else
+  //    wUserLvl      IFNE      '99'
+  //                  EVAL      *INLR = *ON
+  //                  RETURN
+  //                  ENDIF
+EndSr;
+//*********************************************************************
+// Check Function keys pressed by the user
+//*********************************************************************
+BegSr CheckFkeys;
+  // F10=Save changes
+  If *IN10 = *ON;
+    Select;
+      When pMode = 'A';
+        // Add a new External Program
+        Exsr AddEPGM;
+      When pMode = 'E';
+        // Edit an existing External Program
+        Exsr ModifyEPGM;
+    EndSl;
+  EndIf;
+  // F12=Go back
+  If *IN12 = *ON;
+    *INLR = *ON;
+    Return;
+  EndIf;
+EndSr;
+//*********************************************************************
+// Load data and show it on screen
+//*********************************************************************
+BegSr LoadData;
+  Chain pOrder PEXTPGMS;
+  If %FOUND;
+    SCRPNM = EXTPGM;
+    SCROBJ = EXTOBJ;
+    SCRLIB = EXTLIB;
+    SCRORD = EXTORD;
+    SCRALV = EXTALV;
+    If pMode  = 'E';
+      wPrevOrd = SCRORD;
+    EndIf;
+  Else;
+    Dsply 'LOAD ERROR';
+  EndIf;
+EndSr;
+//*********************************************************************
+// Add a new External Program
+//*********************************************************************
+BegSr AddEPGM;
+  Chain SCRORD PEXTPGMS;
+  *IN81 = not %Found;
+  If not *In81;
+    MSGLIN = cOrdExists;
+  Endif;
+  If not *In81;
+    LeaveSr;
+  Endif;
+  EXTORD = SCRORD;
+  EXTPGM = SCRPNM;
+  EXTOBJ = SCROBJ;
+  EXTLIB = SCRLIB;
+  EXTALV = SCRALV;
+  Write(e) RETPGM;
+  *IN91 = %Error;
+  If *In91;
+    MSGLIN = cSaveKO;
+  Endif;
+  If not *In91;
+    MSGLIN = cAddOK;
+  Endif;
+EndSr;
+//*********************************************************************
+// Edit an existing External Program
+//*********************************************************************
+BegSr ModifyEPGM;
+  Chain SCRORD PEXTPGMS;
+  *IN81 = not %Found;
+  If SCRORD = wPrevOrd;
+    *IN81 = *ON;
+  EndIf;
+  If not *In81;
+    MSGLIN = cOrdExists;
+  Endif;
+  If not *In81;
+    LeaveSr;
+  Endif;
+  EXTORD = SCRORD;
+  EXTPGM = SCRPNM;
+  EXTOBJ = SCROBJ;
+  EXTLIB = SCRLIB;
+  EXTALV = SCRALV;
+  Update(e) RETPGM;
+  *IN91 = %Error;
+  If *In91;
+    MSGLIN = cSaveKO;
+  Endif;
+  If not *In91;
+    MSGLIN = cModifOK;
+  Endif;
+EndSr;

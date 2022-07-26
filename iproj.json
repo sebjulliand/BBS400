@@ -1,16 +1,18 @@
 {
-  "description": "BBS for IBM i",
+  "description": "Bulletin board",
   "repository": "git@github.com:sebjulliand/BBS400.git",
-  "includePath": ["src/copybooks"],
+  "buildCommand": "elias compile {branch}",
+  "compileCommand": "elias compile {branch} -f {filename}",
+  "includePath": [
+    "src/copybooks"
+  ],
   "extensions": {
     "arcad": {
-      "code": "BBS400",
-      "libraryPrefix": "BBS",
-      "validated": true,
+      "code": "BBS_SEB",
+      "libraryPrefix": "BSB",
+      "validated": false,
       "iasp": ""
     }
   },
-  "objlib": "&verlibbbs400",
-  "buildCommand": "elias compile {branch}",
-  "compileCommand": "elias compile {branch} -f {filename}"
+  "objlib": "&verlibbbs_seb"
 }
