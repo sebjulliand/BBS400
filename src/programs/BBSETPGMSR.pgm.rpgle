@@ -2,7 +2,7 @@
      H COPYRIGHT('(C) 2020 David Asta under MIT License')
       * SYSTEM      : V4R5
       * PROGRAMMER  : David Asta
-      * DATE-WRITTEN: 21/NOV/2020
+      * DATE-WRITTEN: 21/NOV/2022
       *
       * This program shows the list of the configured External Programs,
       * Allows a user to run any of the programs

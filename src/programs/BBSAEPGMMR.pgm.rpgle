@@ -3,7 +3,7 @@
 Ctl-Opt COPYRIGHT('(C) 2020 David Asta under MIT License');
 // SYSTEM      : V4R5
 // PROGRAMMER  : David Asta
-// DATE-WRITTEN: 10/DEC/2020
+// DATE-WRITTEN: 10/DEC/2022
 //
 // This program allows the SysOp to Add a new External Program or Edit
 //   an existing one
