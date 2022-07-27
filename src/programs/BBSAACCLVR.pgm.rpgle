@@ -9,6 +9,7 @@ Ctl-Opt COPYRIGHT('(C) 2020 David Asta under MIT License');
 //   delete them, as well as add new ones
 //*********************************************************************
 /Include CBKOPTIMIZ
+
 //*********************************************************************
 // INDICATORS USED:
 // 25 - Roll key
