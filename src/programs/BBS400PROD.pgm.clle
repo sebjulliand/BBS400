@@ -4,7 +4,7 @@
              DCL        VAR(&LIBDTA) TYPE(*CHAR) LEN(10)
 
              DCL        VAR(&VERSION) TYPE(*CHAR) LEN(6) +
-                        VALUE('V0R1M0')
+                        VALUE('V0R1M0bla')
 
          /* Set up Library List  */
              RMVLIBLE   LIB(&LIBOBJ)
