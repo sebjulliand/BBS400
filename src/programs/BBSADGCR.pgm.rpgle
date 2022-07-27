@@ -7,7 +7,7 @@
       * This program allows an Administrator user to display/change the
       *   general Configuration values of the BBS stored in PCONFIG
       **********************************************************************
-      /Include CBKOPTIMIZ
+      /Include CBKOPTIMIZ.RPGLEINC
       **********************************************************************
       * INDICATORS USED:
       * 80 - *ON turns DSPATR(PR), which protects fields from being changed
