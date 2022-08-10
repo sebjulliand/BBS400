@@ -1,16 +1,5 @@
 {
   "description": "BBS for IBM i",
   "repository": "git@github.com:sebjulliand/BBS400.git",
-  "includePath": ["src/copybooks"],
-  "extensions": {
-    "arcad": {
-      "code": "BBS400",
-      "libraryPrefix": "BBS",
-      "validated": true,
-      "iasp": ""
-    }
-  },
-  "objlib": "&verlibbbs400",
-  "buildCommand": "elias compile {branch}",
-  "compileCommand": "elias compile {branch} -f {filename}"
+  "includePath": ["src/copybooks"]
 }
