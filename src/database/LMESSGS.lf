@@ -1,5 +1,0 @@
-                R RMESSG                    PFILE(PMESSGS)
-                K MSGBRD
-                K MSGSBD
-                K MSGDAT                    DESCEND
-                K MSGTIM                    DESCEND

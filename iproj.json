@@ -1,5 +1,0 @@
-{
-  "description": "BBS for IBM i",
-  "repository": "git@github.com:sebjulliand/BBS400.git",
-  "includePath": ["src/copybooks"]
-}

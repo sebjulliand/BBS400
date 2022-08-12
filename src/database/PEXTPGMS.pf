@@ -1,8 +1,0 @@
-                                            UNIQUE
-                R RETPGM
-                  EXTORD         2P 0       TEXT('Order of display')
-                  EXTPGM        30A         TEXT('Program description')
-                  EXTOBJ        10A         TEXT('OBJ')
-                  EXTLIB        10A         TEXT('LIB')
-                  EXTALV         2P 0       TEXT('Access Level')
-                K EXTORD
