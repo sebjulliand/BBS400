@@ -11,7 +11,7 @@
       **********************************************************************
       * INDICATORS USED:
       * 80 - *ON turns DSPATR(PR), which protects fields from being changed
-      * 81 - CBKPCFGREA CHAIN Not Found
+      * 81 - CBKPCFGREA CHAIN  Not Found
       **********************************************************************
      FBBSADGCD  CF   E             WORKSTN
      FPCONFIG   UF   E           K DISK
