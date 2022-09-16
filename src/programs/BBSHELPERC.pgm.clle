@@ -2,7 +2,7 @@
 
              DCL        VAR(&MODE) TYPE(*CHAR) LEN(1)
              DCL        VAR(&EXTPGM) TYPE(*CHAR) LEN(10)
-             DCL        VAR(&EXTLIB) TYPE(*CHAR) LEN(10)
+             DCL         VAR(&EXTLIB) TYPE(*CHAR) LEN(10)
              DCL        VAR(&USER) TYPE(*CHAR) LEN(10)
 
     /* MODE = C -> Call External  programs */
