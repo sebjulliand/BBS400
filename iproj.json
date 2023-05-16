@@ -1,0 +1,11 @@
+{
+  "repository": "git@github.com:sebjulliand/BBS400.git",
+  "objlib": "&verlibbbs008",
+  "extensions": {
+    "arcad": {
+      "code": "BBS008"
+    }
+  },
+  "buildCommand": "elias compile {branch}",
+  "compileCommand": "elias compile {branch} -f {files}"
+}

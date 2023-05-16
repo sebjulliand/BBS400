@@ -1,0 +1,17 @@
+     D ChangeDirectory...
+     D                 PR              N
+     D  IN_Directory               5000A   VARYING
+
+      * Get a list of files in a string, separated by a character
+     D GetFilesList    PR              A   Len(1000000) VARYING
+     D  IN_Directory               2000A   CONST VARYING
+     D  IN_Extension                 10A   CONST VARYING
+     D  IN_Separator                  1A   CONST VARYING
+
+      * Run a command
+     D Exec            PR              N
+     D   IN_COMMAND               32000A   CONST VARYING
+
+      * Check IFS file existence
+     D CheckIFS        PR              N
+     D   IN_IFSPATH               16000A   CONST Options(*VarSize)

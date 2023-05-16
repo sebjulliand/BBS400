@@ -1,0 +1,4 @@
+/*%METADATA */
+/*%TEXT My wonderful dtaara! */
+/*%EMETADATA */
+CRTDTAARA DTAARA(&O/&N) TYPE(*CHAR) LEN(100) VALUE('Coucou!')
