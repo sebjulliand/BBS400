@@ -29,10 +29,19 @@
       **********************************************************************
      C     *INZSR        BEGSR
      C                   EVAL      SCRSCR = 'BBSADMMNU'
+     C                   EVAL      SCRSCR = 'BBSADMMNU'
+     C                   EVAL      SCRSCR = 'BBSADMMNU'
+     C                   EVAL      SCRSCR = 'BBSADMMNU'
+     C                   EVAL      SCRSCR = 'BBSADMMNU'
       * Get values from DTAARA and show them on the screen
      D/Include CBKHEADER
      C                   EXSR      UpdMaintOnScr
      C                   ENDSR
+
+
+
+
+     
       **********************************************************************
       * Check Functions keys pressed by user
       **********************************************************************
@@ -53,6 +62,8 @@
      C                   WHEN      *IN15 = *ON
       * F15=Users Management
      C                   EVAL      wMode = 'M'
+     C                   CALL      'BBSLSTUSRR'
+     C                   PARM                    wMode
      C                   CALL      'BBSLSTUSRR'
      C                   PARM                    wMode
      C                   WHEN      *IN16 = *ON
@@ -91,6 +102,7 @@
      C                   ENDSL
      C     ENDOFSR       TAG
      C                   ENDSR
+      * Coucou
       **********************************************************************
       * Update Maintenance Mode on Screen
       **********************************************************************

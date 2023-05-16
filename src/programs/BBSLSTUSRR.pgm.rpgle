@@ -10,6 +10,8 @@
       * Compiler flags
      H ALWNULL(*USRCTL)
      H/Include CBKOPTIMIZ
+
+
       **********************************************************************
       * INDICATORS USED:
       * 25 - Roll key
@@ -39,6 +41,9 @@
      D cErrOptNoAdmin  C                   CONST('Value entered for field is no-
      D                                     t valid. Valid values listed in mess-
      D                                     age help.')
+     D cErrOptNoAdmi2  C                   CONST('Value entered for field is no-
+     D                                     t valid. Valid values listed in mess-
+     D                                     age help.')
       * Variables
      D/Include CBKUSEWINS
      D pMode           S              1A
@@ -48,6 +53,8 @@
      D wTodayDate      S               D
      D wRRN            S              4P 0
      D wCfgKey         S              6A
+     D wCfgKey2        S              6A
+     D wCfgKey3        S              6A
      D wMode           S              1A
      D wSubject        S             45A
      ***********************************************************************
@@ -78,9 +85,15 @@
      C                   WHEN      pMode = 'N'
       *           List users Online Now
      C                   EVAL      *IN30 = *ON
+     C                   WHEN      pMode = 'N'
+      *           List users Online Now
+     C                   EVAL      *IN30 = *ON
      C                   WHEN      pMode = 'T'
       *           List users Online Today
      C                   EVAL      *IN31 = *ON
+     C                   WHEN      pMode = 'A'
+      *           List all users
+     C                   EVAL      *IN32 = *ON
      C                   WHEN      pMode = 'A'
       *           List all users
      C                   EVAL      *IN32 = *ON
@@ -101,6 +114,7 @@
      C     ChkFkeys      BEGSR
       * F5=Refresh
      C                   IF        *IN05 = *ON
+     C                   EXSR      ReLoadSFL
      C                   EXSR      ReLoadSFL
      C                   ENDIF
       * F12=Go back
@@ -135,6 +149,11 @@
      C                   EVAL      MSGLIN = cErrOptNoAdmin
      C                   ENDIF
      C                   WHEN      SCROPT = '4'
+
+
+
+
+     
       * Delete User (Only from Administration)
      C                   IF        *IN33 = *ON
       *       Ask for confirmation before deleting
