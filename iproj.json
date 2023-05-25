@@ -7,5 +7,8 @@
     }
   },
   "buildCommand": "elias compile {branch}",
-  "compileCommand": "elias compile {branch} -f {files}"
+  "compileCommand": "elias compile {branch} -f {files}",
+  "includePath": [
+    "src/copybooks"
+  ]
 }
